@@ -1,26 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+import { TypingProvider } from './state/context';
+import { UserInput } from './components/UserInput';
+import { Preview } from './components/Preview';
+import { SpeedInfo } from './components/SpeedInfo';
+
+export const App = () => (
+  <TypingProvider>
+    <h1>Typing Speed Test</h1>
+    <div className='container'>
+      <div className='typing-test'>
+        <Preview />
+        <UserInput />
+      </div>
+      <SpeedInfo />
     </div>
-  );
-}
-
-export default App;
+  </TypingProvider>
+);
