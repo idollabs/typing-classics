@@ -26,56 +26,63 @@ export const useTyping = () => {
   const [state, dispatch] = useContext(typingContext);
   console.log('state: ', state);
 
-  //Pause if away from keyboard
-  // if (state.autoPauseTimer === 5) {
-  //   clearInterval(state.pauseTimerId);
-  //   dispatch({ type: ActionTypes.SET_PAUSE_TIMER });
-
-  //   clearInterval(state.timerId);
-  //   dispatch({ type: ActionTypes.SET_TIMER });
-  // }
+  let newTimerInterval: any = null;
+  let newAutoPauseTimerInterval: any = null;
+  let timersStarted: boolean = false;
 
   const onInput = (value: string) => {
     dispatch({ type: ActionTypes.AUTO_PAUSE_TIMER_RESET });
 
-    if (!state.timerId) {
-      startTimer();
-      startAutoPauseTimer();
+    if (!state.timersRunning) {
+      if (!timersStarted) {
+        startTimer();
+        startAutoPauseTimer();
+        timersStarted = true;
+        console.log('timers running: ', state.timersRunning);
+        console.log('being called');
+        console.log('time started', timersStarted);
+      }
     }
-    if (state.input.length >= state.text.length - 1 && state.timerId) {
-      stopTimer();
+    if (state.input.length >= state.text.length - 1 && state.timerInterval) {
+      stopTimers();
     }
     dispatch({ type: ActionTypes.CHANGE_INPUT, payload: value });
     dispatch({ type: ActionTypes.COUNT_CHAR, payload: value });
   };
 
   const startTimer = () => {
-    const timerId = setInterval(
-      () => dispatch({ type: ActionTypes.TICK }),
+    newTimerInterval = setInterval(
+      () => dispatch({ type: ActionTypes.TIMER_INCREMENT }),
       1000
     );
-    dispatch({ type: ActionTypes.SET_TIMER, payload: timerId });
+    // dispatch({ type: ActionTypes.SET_TIMER, payload: timerInterval });
   };
 
   const startAutoPauseTimer = () => {
-    const pauseTimerId = setInterval(
+    newAutoPauseTimerInterval = setInterval(
       () => dispatch({ type: ActionTypes.AUTO_PAUSE_TIMER_INCREMENT }),
       1000
     );
-    dispatch({ type: ActionTypes.SET_PAUSE_TIMER, payload: pauseTimerId });
   };
 
-  const stopTimer = () => {
-    clearInterval(state.timerId);
-    dispatch({ type: ActionTypes.SET_TIMER });
+  const stopTimers = () => {
+    clearInterval(newTimerInterval);
+    clearInterval(newAutoPauseTimerInterval);
+    dispatch({ type: ActionTypes.STOP_TIMERS });
+    timersStarted = false;
   };
+  console.log(
+    'test state',
+    state.autoPauseTimerInterval,
+    state.autoPauseSeconds
+  );
 
   const onReset = () => {
-    stopTimer();
+    stopTimers();
     dispatch({ type: ActionTypes.CHANGE_INPUT, payload: '' });
     dispatch({ type: ActionTypes.COUNT_CHAR, payload: '' });
     dispatch({ type: ActionTypes.TIMER_RESET, payload: '' });
   };
 
-  return { state, onInput, stopTimer, onReset };
+  return { state, onInput, stopTimers, onReset };
 };

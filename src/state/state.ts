@@ -1,26 +1,28 @@
 import { countCorrectCharacters, countTotalCharacters } from '../utils';
+//import { book } from '../Books/hunchback';
 
 export interface State {
   text: string;
   input: string;
   correctCharacters: number;
   allCharacters: number;
-  seconds: number;
-  timerId?: number;
-  autoPauseTimer: number;
-  pauseTimerId?: number;
+  timerSeconds: number;
+  timerInterval?: number;
+  autoPauseSeconds: number;
+  autoPauseTimerInterval?: number;
+  timersRunning: boolean;
 }
 
 export const initialState: State = {
-  text:
-    'Just some typing speed initial state words. Add some other text later, ok?',
+  text: 'Just some practice text',
   input: '',
   correctCharacters: 0,
   allCharacters: 0,
-  seconds: 0,
-  timerId: undefined,
-  autoPauseTimer: 0,
-  pauseTimerId: undefined,
+  timerSeconds: 0,
+  timerInterval: 0,
+  autoPauseSeconds: 0,
+  autoPauseTimerInterval: 0,
+  timersRunning: false,
 };
 
 export enum ActionTypes {
@@ -28,10 +30,12 @@ export enum ActionTypes {
   COUNT_CHAR,
   SET_TIMER,
   SET_PAUSE_TIMER,
-  TICK,
+  TIMER_INCREMENT,
   TIMER_RESET,
   AUTO_PAUSE_TIMER_INCREMENT,
   AUTO_PAUSE_TIMER_RESET,
+  STOP_TIMERS,
+  START_TIMERS,
 }
 
 export interface Action<T> {
@@ -54,24 +58,32 @@ export const countCharacters: Reducer<string> = (state, input = '') => ({
   allCharacters: countTotalCharacters(state.text, input),
 });
 
-export const setTimer: Reducer<number> = (state, timerId) => ({
+export const setTimer: Reducer<number> = (state, timerInterval) => {
+  console.log('timerInterval', state, timerInterval);
+  const newState = {
+    ...state,
+    timerInterval,
+  };
+  console.log('newState', newState);
+  return newState;
+};
+
+export const timerIncrement: Reducer = (state) => ({
   ...state,
-  timerId,
+  timerSeconds: state.timerSeconds + 1,
 });
 
-export const tick: Reducer = (state) => ({
+export const setPauseTimerInterval: Reducer<number> = (
+  state,
+  pauseTimerInterval
+) => ({
   ...state,
-  seconds: state.seconds + 1,
+  pauseTimerInterval,
 });
 
-export const setPauseTimerId: Reducer<number> = (state, pauseTimerId) => ({
+export const autoPauseSecondsIncrement: Reducer = (state) => ({
   ...state,
-  pauseTimerId,
-});
-
-export const autoPauseTimerIncrement: Reducer = (state) => ({
-  ...state,
-  autoPauseTimer: state.autoPauseTimer + 1,
+  autoPauseSeconds: state.autoPauseSeconds + 1,
   // state.autoPauseTimer === 8
   //   ? (state.autoPauseTimer = 0)
   //   : state.autoPauseTimer + 1,
@@ -79,11 +91,21 @@ export const autoPauseTimerIncrement: Reducer = (state) => ({
 
 export const timerReset: Reducer<number> = (state) => ({
   ...state,
-  seconds: 0,
+  timerSeconds: 0,
 });
-export const autoPauseTimerReset: Reducer<number> = (state) => ({
+export const autoPauseSecondsReset: Reducer<number> = (state) => ({
   ...state,
-  autoPauseTimer: 0,
+  autoPauseSeconds: 0,
+});
+
+const startTimers: Reducer<boolean> = (state) => ({
+  ...state,
+  timersRunning: true,
+});
+
+const stopTimers: Reducer<boolean> = (state) => ({
+  ...state,
+  timersRunning: false,
 });
 
 export const reducer: Transducer = (state, action) => {
@@ -96,14 +118,19 @@ export const reducer: Transducer = (state, action) => {
       return setTimer(state, action.payload);
     case ActionTypes.SET_PAUSE_TIMER:
       return setTimer(state, action.payload);
-    case ActionTypes.TICK:
-      return tick(state);
+    case ActionTypes.TIMER_INCREMENT:
+      return timerIncrement(state);
     case ActionTypes.AUTO_PAUSE_TIMER_INCREMENT:
-      return autoPauseTimerIncrement(state);
+      return autoPauseSecondsIncrement(state);
     case ActionTypes.TIMER_RESET:
       return timerReset(state);
     case ActionTypes.AUTO_PAUSE_TIMER_RESET:
-      return autoPauseTimerReset(state);
+      return autoPauseSecondsReset(state);
+    case ActionTypes.STOP_TIMERS:
+      return stopTimers(state);
+    case ActionTypes.START_TIMERS:
+      return startTimers(state);
+
     default:
       return state;
   }

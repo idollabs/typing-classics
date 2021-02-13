@@ -5,8 +5,8 @@ import { useTyping } from '../state/context';
 
 export const SpeedInfo = () => {
   const {
-    state: { correctCharacters, allCharacters, seconds, autoPauseTimer },
-    stopTimer,
+    state: { correctCharacters, allCharacters, timerSeconds, autoPauseSeconds },
+    stopTimers,
     onReset,
   } = useTyping();
   console.log(
@@ -15,18 +15,18 @@ export const SpeedInfo = () => {
     'charVanillia: ',
     allCharacters,
     'seconds:',
-    seconds,
+    timerSeconds,
     'auto pause:',
-    autoPauseTimer
+    autoPauseSeconds
   );
   return (
     <div className="typing-speed">
       Typing speed
-      <div>Time: {seconds} sec</div>
-      <div>WPM: {wpm(correctCharacters, seconds)}</div>
+      <div>Time: {timerSeconds} sec</div>
+      <div>WPM: {wpm(correctCharacters, timerSeconds)}</div>
       <div>Correct characters: {correctCharacters}</div>
       <div>Accuracy: {accuracy(allCharacters, correctCharacters)}%</div>
-      <button onClick={stopTimer}>Pause</button>
+      <button onClick={stopTimers}>Pause</button>
       <button onClick={onReset}>Reset</button>
     </div>
   );
