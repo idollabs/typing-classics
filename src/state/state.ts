@@ -14,7 +14,8 @@ export interface State {
 }
 
 export const initialState: State = {
-  text: 'Just some practice text',
+  text:
+    'Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text',
   input: '',
   correctCharacters: 0,
   allCharacters: 0,

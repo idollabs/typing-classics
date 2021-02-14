@@ -4,6 +4,8 @@ import React, {
   useReducer,
   useContext,
   Dispatch,
+  useEffect,
+  useCallback,
 } from 'react';
 
 import { initialState, reducer, ActionTypes, Action, State } from './state';
@@ -22,13 +24,13 @@ export const TypingProvider: FunctionComponent = ({ children }) => {
   );
 };
 
+let newTimerInterval: any = null;
+let newAutoPauseTimerInterval: any = null;
+let timersStarted: boolean = false;
+
 export const useTyping = () => {
   const [state, dispatch] = useContext(typingContext);
   console.log('state: ', state);
-
-  let newTimerInterval: any = null;
-  let newAutoPauseTimerInterval: any = null;
-  let timersStarted: boolean = false;
 
   const onInput = (value: string) => {
     dispatch({ type: ActionTypes.AUTO_PAUSE_TIMER_RESET });
@@ -65,16 +67,26 @@ export const useTyping = () => {
     );
   };
 
-  const stopTimers = () => {
+  const stopTimers = useCallback(() => {
     clearInterval(newTimerInterval);
     clearInterval(newAutoPauseTimerInterval);
     dispatch({ type: ActionTypes.STOP_TIMERS });
+    console.log(
+      'timers stopped',
+      'newtimerint',
+      newTimerInterval,
+      'newautopause',
+      newAutoPauseTimerInterval
+    );
     timersStarted = false;
-  };
+  }, [dispatch]);
+
   console.log(
     'test state',
     state.autoPauseTimerInterval,
-    state.autoPauseSeconds
+    state.autoPauseSeconds,
+    'timer seconds',
+    state.timerSeconds
   );
 
   const onReset = () => {
@@ -82,7 +94,14 @@ export const useTyping = () => {
     dispatch({ type: ActionTypes.CHANGE_INPUT, payload: '' });
     dispatch({ type: ActionTypes.COUNT_CHAR, payload: '' });
     dispatch({ type: ActionTypes.TIMER_RESET, payload: '' });
+    dispatch({ type: ActionTypes.AUTO_PAUSE_TIMER_RESET, payload: '' });
   };
+
+  const autoPauseTime = state.autoPauseSeconds >= 5;
+
+  useEffect(() => {
+    stopTimers();
+  }, [autoPauseTime, stopTimers]);
 
   return { state, onInput, stopTimers, onReset };
 };
