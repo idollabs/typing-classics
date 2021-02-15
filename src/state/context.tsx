@@ -57,7 +57,6 @@ export const useTyping = () => {
       () => dispatch({ type: ActionTypes.TIMER_INCREMENT }),
       1000
     );
-    // dispatch({ type: ActionTypes.SET_TIMER, payload: timerInterval });
   };
 
   const startAutoPauseTimer = () => {

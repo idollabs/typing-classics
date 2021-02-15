@@ -86,9 +86,6 @@ export const setPauseTimerInterval: Reducer<number> = (
 export const autoPauseSecondsIncrement: Reducer = (state) => ({
   ...state,
   autoPauseSeconds: state.autoPauseSeconds + 1,
-  // state.autoPauseTimer === 8
-  //   ? (state.autoPauseTimer = 0)
-  //   : state.autoPauseTimer + 1,
 });
 
 export const timerReset: Reducer<number> = (state) => ({
