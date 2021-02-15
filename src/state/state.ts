@@ -15,7 +15,7 @@ export interface State {
 
 export const initialState: State = {
   text:
-    'Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text',
+    'Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice Climate text Just some practice text Just some practice text',
   input: '',
   correctCharacters: 0,
   allCharacters: 0,
@@ -51,6 +51,7 @@ export const changeInput: Reducer<string> = (state, input = '') => ({
   ...state,
   input,
   correctCharacters: countCorrectCharacters(state.text, input),
+  timersRunning: true,
 });
 
 export const countCharacters: Reducer<string> = (state, input = '') => ({

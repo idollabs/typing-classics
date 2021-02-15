@@ -17,5 +17,5 @@ export const Preview: FunctionComponent = () => {
     );
   });
 
-  return <div className='preview'>{previewText}</div>;
+  return <div className="preview">{previewText}</div>;
 };

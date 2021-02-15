@@ -24,6 +24,7 @@ export const SpeedInfo = () => {
       Typing speed
       <div>Time: {timerSeconds} sec</div>
       <div>WPM: {wpm(correctCharacters, timerSeconds)}</div>
+      <div>All characters: {allCharacters}</div>
       <div>Correct characters: {correctCharacters}</div>
       <div>Accuracy: {accuracy(allCharacters, correctCharacters)}%</div>
       <button onClick={stopTimers}>Pause</button>
