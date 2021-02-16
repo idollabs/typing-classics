@@ -30,63 +30,65 @@ let timersStarted: boolean = false;
 
 export const useTyping = () => {
   const [state, dispatch] = useContext(typingContext);
-  console.log('state: ', state);
 
-  const onInput = (value: string) => {
-    dispatch({ type: ActionTypes.AUTO_PAUSE_TIMER_RESET });
-
-    if (!state.timersRunning) {
-      if (!timersStarted) {
-        startTimer();
-        startAutoPauseTimer();
-        timersStarted = true;
-        console.log('timers running: ', state.timersRunning);
-        console.log('being called');
-        console.log('time started', timersStarted);
-      }
-    }
-    if (state.input.length >= state.text.length - 1 && state.timerInterval) {
-      stopTimers();
-    }
-    dispatch({ type: ActionTypes.CHANGE_INPUT, payload: value });
-    dispatch({ type: ActionTypes.COUNT_CHAR, payload: value });
-  };
-
-  const startTimer = () => {
+  const startTimer = useCallback(() => {
     newTimerInterval = setInterval(
       () => dispatch({ type: ActionTypes.TIMER_INCREMENT }),
       1000
     );
-  };
+  }, [dispatch]);
 
-  const startAutoPauseTimer = () => {
+  const startAutoPauseTimer = useCallback(() => {
     newAutoPauseTimerInterval = setInterval(
       () => dispatch({ type: ActionTypes.AUTO_PAUSE_TIMER_INCREMENT }),
       1000
     );
-  };
+  }, [dispatch]);
 
   const stopTimers = useCallback(() => {
     clearInterval(newTimerInterval);
     clearInterval(newAutoPauseTimerInterval);
     dispatch({ type: ActionTypes.STOP_TIMERS });
-    console.log(
-      'timers stopped',
-      'newtimerint',
-      newTimerInterval,
-      'newautopause',
-      newAutoPauseTimerInterval
-    );
+
     timersStarted = false;
   }, [dispatch]);
 
-  console.log(
-    'test state',
-    state.autoPauseTimerInterval,
-    state.autoPauseSeconds,
-    'timer seconds',
-    state.timerSeconds
+  const onInput = useCallback(
+    (value: string) => {
+      dispatch({ type: ActionTypes.AUTO_PAUSE_TIMER_RESET });
+
+      if (!state.timersRunning) {
+        if (!timersStarted) {
+          startTimer();
+          startAutoPauseTimer();
+          timersStarted = true;
+        }
+      }
+      if (state.input.length >= state.text.length - 1 && state.timerInterval) {
+        stopTimers();
+      }
+      dispatch({ type: ActionTypes.CHANGE_INPUT, payload: value });
+      dispatch({ type: ActionTypes.COUNT_CHAR, payload: value });
+    },
+    [
+      dispatch,
+      state.input.length,
+      state.text.length,
+      state.timerInterval,
+      state.timersRunning,
+      startAutoPauseTimer,
+      startTimer,
+      stopTimers,
+    ]
   );
+
+  // console.log(
+  //   'test state',
+  //   state.autoPauseTimerInterval,
+  //   state.autoPauseSeconds,
+  //   'timer seconds',
+  //   state.timerSeconds
+  // );
 
   const onReset = () => {
     stopTimers();
