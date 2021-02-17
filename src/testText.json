@@ -1,11 +1,11 @@
-{
-  "char1": "J",
-  "char2": "u",
-  "char3": "s",
-  "char4": "t",
-  "char5": " ",
-  "char6": "s",
-  "char7": "o",
-  "char8": "m",
-  "char9": "e"
-}
+[
+  { "id": 1, "char": "J" },
+  { "id": 2, "char": "u" },
+  { "id": 3, "char": "s" },
+  { "id": 4, "char": "t" },
+  { "id": 5, "char": " " },
+  { "id": 6, "char": "s" },
+  { "id": 7, "char": "o" },
+  { "id": 8, "char": "m" },
+  { "id": 9, "char": "e" }
+]

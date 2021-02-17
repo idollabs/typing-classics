@@ -1,8 +1,9 @@
 import { countCorrectCharacters, countTotalCharacters } from '../utils';
 //import { book } from '../Books/hunchback';
+import textText from '../testText.json';
 
 export interface State {
-  text: string;
+  text: Array<Object>;
   input: string;
   correctCharacters: number;
   allCharacters: number;
@@ -14,8 +15,8 @@ export interface State {
 }
 
 export const initialState: State = {
-  text:
-    'Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice Climate text Just some practice text Just some practice text',
+  text: textText,
+  // 'Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice Climate text Just some practice text Just some practice text',
   input: '',
   correctCharacters: 0,
   allCharacters: 0,
