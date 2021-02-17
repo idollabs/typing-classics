@@ -1,11 +1,11 @@
 [
-  { "id": 1, "char": "J" },
-  { "id": 2, "char": "u" },
-  { "id": 3, "char": "s" },
-  { "id": 4, "char": "t" },
-  { "id": 5, "char": " " },
-  { "id": 6, "char": "s" },
-  { "id": 7, "char": "o" },
-  { "id": 8, "char": "m" },
-  { "id": 9, "char": "e" }
+  { "id": 0, "char": "J" },
+  { "id": 1, "char": "u" },
+  { "id": 2, "char": "s" },
+  { "id": 3, "char": "t" },
+  { "id": 4, "char": " " },
+  { "id": 5, "char": "s" },
+  { "id": 6, "char": "o" },
+  { "id": 7, "char": "m" },
+  { "id": 8, "char": "e" }
 ]

@@ -3,7 +3,7 @@ import { countCorrectCharacters, countTotalCharacters } from '../utils';
 import textText from '../testText.json';
 
 export interface State {
-  text: Array<Object>;
+  text: string;
   input: string;
   correctCharacters: number;
   allCharacters: number;
@@ -15,8 +15,8 @@ export interface State {
 }
 
 export const initialState: State = {
-  text: textText,
-  // 'Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice Climate text Just some practice text Just some practice text',
+  text:
+    'Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice Climate text Just some practice text Just some practice text',
   input: '',
   correctCharacters: 0,
   allCharacters: 0,
