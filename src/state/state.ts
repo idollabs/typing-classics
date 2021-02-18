@@ -1,6 +1,6 @@
 import { countCorrectCharacters, countTotalCharacters } from '../utils';
 //import { book } from '../Books/hunchback';
-import textText from '../testText.json';
+import testText from '../testText.json';
 
 export interface State {
   text: string;
