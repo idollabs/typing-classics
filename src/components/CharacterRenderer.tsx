@@ -1,27 +1,45 @@
 import React, { useRef } from 'react';
 import { useTyping } from '../state/context';
+import testText from '../testText.json';
 
 export const CharacterRenderer = () => {
   const {
-    state: { text, input },
+    state: { text, input }, //text state will replace testText
   } = useTyping();
 
-  const charRef = useRef();
+  const charRefs = useRef(new Array(testText.length));
+
+  const handleSlider = () => {
+    if (input.length - 1 >= 0 && input.length <= testText.length) {
+      charRefs.current[input.length - 1].scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
+
+  if (input) {
+    handleSlider();
+  }
 
   return (
     <div className='characterRenderer'>
-      {text.split('').map((s, i) => {
+      {testText.map(({ id, char }) => {
         let color = '';
-        if (i < input.length) {
-          color = s === input[i] ? 'green' : 'red';
+        if (id < input.length) {
+          color = char === input[id] ? 'green' : 'red';
         }
 
         return (
-          <>
-            <span key={`${s}_${i}`} className={color}>
-              {s}
-            </span>
-          </>
+          <span
+            key={id}
+            className={color}
+            ref={(element) => {
+              charRefs.current[id] = element;
+            }}
+          >
+            {char}
+          </span>
         );
       })}
     </div>
