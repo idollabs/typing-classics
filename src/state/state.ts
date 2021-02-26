@@ -1,6 +1,5 @@
 import { countCorrectCharacters, countTotalCharacters } from '../utils';
 import testText from '../testText.json';
-// import hunchback from '../Books/the_hunchback_of_notre_dame.json';
 
 const textOrigin = testText;
 
@@ -63,20 +62,20 @@ export interface Action<T> {
 type Transducer = (state: State, action: Action<any>) => State;
 type Reducer<T = any> = (state: State, payload?: T) => State;
 
-export const changeInput: Reducer<string> = (state, input = '') => ({
+const changeInput: Reducer<string> = (state, input = '') => ({
   ...state,
   input,
   correctCharacters: countCorrectCharacters(state.helperText, input),
   timersRunning: true,
 });
 
-export const countCharacters: Reducer<string> = (state, input = '') => ({
+const countCharacters: Reducer<string> = (state, input = '') => ({
   ...state,
   input,
   allCharacters: countTotalCharacters(input),
 });
 
-export const setTimer: Reducer<number> = (state, timerInterval) => {
+const setTimer: Reducer<number> = (state, timerInterval) => {
   console.log('timerInterval', state, timerInterval);
   const newState = {
     ...state,
@@ -86,7 +85,7 @@ export const setTimer: Reducer<number> = (state, timerInterval) => {
   return newState;
 };
 
-export const timerIncrement: Reducer = (state) => ({
+const timerIncrement: Reducer = (state) => ({
   ...state,
   timerSeconds: state.timerSeconds + 1,
 });
@@ -99,16 +98,16 @@ export const setPauseTimerInterval: Reducer<number> = (
   pauseTimerInterval,
 });
 
-export const autoPauseSecondsIncrement: Reducer = (state) => ({
+const autoPauseSecondsIncrement: Reducer = (state) => ({
   ...state,
   autoPauseSeconds: state.autoPauseSeconds + 1,
 });
 
-export const timerReset: Reducer<number> = (state) => ({
+const timerReset: Reducer<number> = (state) => ({
   ...state,
   timerSeconds: 0,
 });
-export const autoPauseSecondsReset: Reducer<number> = (state) => ({
+const autoPauseSecondsReset: Reducer<number> = (state) => ({
   ...state,
   autoPauseSeconds: 0,
 });

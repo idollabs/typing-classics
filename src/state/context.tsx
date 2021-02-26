@@ -82,14 +82,6 @@ export const useTyping = () => {
     ]
   );
 
-  // console.log(
-  //   'test state',
-  //   state.autoPauseTimerInterval,
-  //   state.autoPauseSeconds,
-  //   'timer seconds',
-  //   state.timerSeconds
-  // );
-
   const onReset = () => {
     stopTimers();
     dispatch({ type: ActionTypes.CHANGE_INPUT, payload: '' });
