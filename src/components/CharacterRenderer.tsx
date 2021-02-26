@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useTyping } from '../state/context';
 
 export const CharacterRenderer = () => {
