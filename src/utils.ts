@@ -1,3 +1,5 @@
+// import find from 'lodash/find';
+
 export const words = (char: number) => char / 5;
 
 export const minutes = (seconds: number) => seconds / 60;
@@ -6,12 +8,22 @@ export const wpm = (words: number, minute: number) =>
   Math.round(words / minute) || 0;
 
 export const countCorrectCharacters = (text: string, input: string) => {
-  const tc = text;
-  const ic = input;
-  return ic.split('').filter((c, i) => c === tc[i]).length;
+  const textChar = text;
+  const inputChar = input;
+
+  return inputChar.split('').filter((char, index) => char === textChar[index])
+    .length;
 };
 
-export const countTotalCharacters = (text: string, input: string) => {
+// export const countCorrectCharacters = (text: any, input: string) => {
+//   const textObj = input.length > 0 ? find(text, { id: input.length - 1 }) : 0;
+//   const textChar = textObj.char;
+//   const inputChar = input;
+
+//   return inputChar.split('').filter((char) => char === textChar).length;
+// };
+
+export const countTotalCharacters = (input: string) => {
   return input.length;
 };
 

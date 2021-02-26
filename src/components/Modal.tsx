@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTyping } from '../state/context';
 
 export const Modal = () => {

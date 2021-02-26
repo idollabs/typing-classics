@@ -1,29 +1,18 @@
-import React from 'react';
-
-import { wpm, accuracy } from '../utils';
+import { wpm, accuracy, words, minutes } from '../utils';
 import { useTyping } from '../state/context';
 
 export const SpeedInfo = () => {
   const {
-    state: { correctCharacters, allCharacters, timerSeconds, autoPauseSeconds },
+    state: { correctCharacters, allCharacters, timerSeconds },
     stopTimers,
     onReset,
   } = useTyping();
-  console.log(
-    'character: ',
-    correctCharacters,
-    'charVanillia: ',
-    allCharacters,
-    'seconds:',
-    timerSeconds,
-    'auto pause:',
-    autoPauseSeconds
-  );
+
   return (
     <div className="typing-speed">
       Typing speed
       <div>Time: {timerSeconds} sec</div>
-      <div>WPM: {wpm(correctCharacters, timerSeconds)}</div>
+      <div>WPM: {wpm(words(correctCharacters), minutes(timerSeconds))}</div>
       <div>All characters: {allCharacters}</div>
       <div>Correct characters: {correctCharacters}</div>
       <div>Accuracy: {accuracy(allCharacters, correctCharacters)}%</div>

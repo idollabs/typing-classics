@@ -1,9 +1,24 @@
 import { countCorrectCharacters, countTotalCharacters } from '../utils';
-//import { book } from '../Books/hunchback';
 import testText from '../testText.json';
+// import hunchback from '../Books/the_hunchback_of_notre_dame.json';
+
+const textOrigin = testText;
+
+const extractText = (): string => {
+  let textString = '';
+
+  textOrigin.map(({ char }) => {
+    return (textString += char);
+  });
+
+  return textString;
+};
+
+type objectIdChar = { id: number; char: string };
 
 export interface State {
-  text: string;
+  text: Array<objectIdChar>;
+  helperText: string;
   input: string;
   correctCharacters: number;
   allCharacters: number;
@@ -15,8 +30,8 @@ export interface State {
 }
 
 export const initialState: State = {
-  text:
-    'Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice text Just some practice Climate text Just some practice text Just some practice text',
+  text: textOrigin,
+  helperText: extractText(),
   input: '',
   correctCharacters: 0,
   allCharacters: 0,
@@ -51,14 +66,14 @@ type Reducer<T = any> = (state: State, payload?: T) => State;
 export const changeInput: Reducer<string> = (state, input = '') => ({
   ...state,
   input,
-  correctCharacters: countCorrectCharacters(state.text, input),
+  correctCharacters: countCorrectCharacters(state.helperText, input),
   timersRunning: true,
 });
 
 export const countCharacters: Reducer<string> = (state, input = '') => ({
   ...state,
   input,
-  allCharacters: countTotalCharacters(state.text, input),
+  allCharacters: countTotalCharacters(input),
 });
 
 export const setTimer: Reducer<number> = (state, timerInterval) => {
