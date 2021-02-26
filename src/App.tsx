@@ -8,10 +8,10 @@ import { Modal } from './components/Modal';
 
 export const App = () => (
   <TypingProvider>
-    <h1>Typing Speed Test</h1>
+    <h1>Typing Classics</h1>
     <Modal />
-    <div className='container'>
-      <div className='typing-test'>
+    <div className="container">
+      <div className="typing-test">
         <CharacterRenderer />
 
         <UserInput />

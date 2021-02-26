@@ -1,16 +1,15 @@
 import React, { useRef } from 'react';
 import { useTyping } from '../state/context';
-import testText from '../testText.json';
 
 export const CharacterRenderer = () => {
   const {
-    state: { text, input }, //text state will replace testText
+    state: { text, input },
   } = useTyping();
 
-  const charRefs = useRef(new Array(testText.length));
+  const charRefs = useRef(new Array(text.length));
 
   const handleSlider = () => {
-    if (input.length - 1 >= 0 && input.length <= testText.length) {
+    if (input.length - 1 >= 0 && input.length <= text.length) {
       charRefs.current[input.length - 1].scrollIntoView({
         behavior: 'smooth',
         block: 'start',
@@ -21,10 +20,9 @@ export const CharacterRenderer = () => {
   if (input) {
     handleSlider();
   }
-
   return (
-    <div className='characterRenderer'>
-      {testText.map(({ id, char }) => {
+    <div className="characterRenderer">
+      {text.map(({ id, char }) => {
         let color = '';
         if (id < input.length) {
           color = char === input[id] ? 'green' : 'red';
